@@ -32,8 +32,13 @@ const routes = [
   },
 ]
 
+// Get base path from import.meta.env (set by Vite)
+// This matches the base path in vite.config.js
+// BASE_URL is automatically set by Vite based on the 'base' config option
+const base = import.meta.env.BASE_URL
+
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(base),
   routes,
 })
 
