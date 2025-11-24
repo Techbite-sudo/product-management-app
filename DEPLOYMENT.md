@@ -21,27 +21,17 @@
 
 3. **Using GitHub Actions (Recommended):**
    
-   Create `.github/workflows/deploy.yml`:
-   ```yaml
-   name: Deploy to GitHub Pages
+   The workflow file `.github/workflows/deploy.yml` is already configured. Make sure:
    
-   on:
-     push:
-       branches: [ main ]
+   - **Enable GitHub Pages** in your repository settings:
+     - Go to Settings → Pages
+     - Under "Source", select "GitHub Actions"
    
-   jobs:
-     deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v3
-         - uses: oven-sh/setup-bun@v1
-         - run: bun install
-         - run: bun run build
-         - uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./dist
-   ```
+   - **Repository Name**: The base path in `vite.config.js` automatically uses your repository name. If your repo is named `product-management-app`, the app will be available at `https://username.github.io/product-management-app/`
+   
+   - **For root-level GitHub Pages** (username.github.io), update `vite.config.js` base path to `/`
+   
+   The workflow uses the modern GitHub Pages deployment method with proper permissions and artifact handling.
 
 4. **Verify Base Path:**
    - The `vite.config.js` is configured with base path `/product-management-app/` for production
@@ -51,9 +41,34 @@
 
 ### Important Notes
 
-- The base path in `vite.config.js` must match your GitHub Pages URL structure
-- After deployment, your app will be available at: `https://username.github.io/product-management-app/`
+- **Enable GitHub Pages**: You must enable GitHub Pages in your repository settings and select "GitHub Actions" as the source
+- The base path in `vite.config.js` automatically uses your repository name
+- After deployment, your app will be available at: `https://username.github.io/repository-name/`
 - Make sure Vue Router is using `createWebHistory()` (which it is) for proper routing
+- The workflow supports both `main` and `master` branches
+
+### Troubleshooting Deployment
+
+If deployment fails:
+
+1. **Check GitHub Pages Settings**:
+   - Go to Settings → Pages
+   - Ensure "Source" is set to "GitHub Actions"
+   - Check that the workflow has proper permissions
+
+2. **Verify Repository Name**:
+   - The base path should match your repository name
+   - For a repo named `product-management-app`, the base path should be `/product-management-app/`
+
+3. **Check Workflow Logs**:
+   - Go to Actions tab in your repository
+   - Click on the failed workflow run
+   - Check the build logs for errors
+
+4. **Common Issues**:
+   - **Build fails**: Check that all dependencies are in `package.json`
+   - **404 errors**: Verify base path matches repository name
+   - **Permission errors**: Ensure workflow has `pages: write` permission
 
 ## Other Hosting Options
 
