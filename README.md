@@ -48,6 +48,10 @@ product-management-app/
 ├── package.json
 ├── vite.config.js
 ├── tailwind.config.js
+├── env.example              # Environment variables example
+├── public/
+│   ├── 404.html            # GitHub Pages SPA routing
+│   └── .nojekyll           # Disable Jekyll processing
 └── README.md
 ```
 
@@ -144,6 +148,37 @@ The primary color `#000080` (Navy Blue) is configured in `tailwind.config.js` an
 ### GitHub Pages Deployment
 
 The `vite.config.js` includes a base path configuration (`/product-management-app/`) for GitHub Pages deployment. If deploying elsewhere, you may need to adjust this.
+
+### Environment Variables
+
+The project uses environment variables for configuration. An example file `env.example` is provided.
+
+**For Local Development:**
+
+Create a `.env.local` file in the root directory (this file is gitignored):
+
+```env
+# Base path for local development (usually '/')
+VITE_BASE_PATH=/
+
+# API Configuration (if needed in future)
+# VITE_API_BASE_URL=https://dummyjson.com
+```
+
+**Available Environment Variables:**
+
+- `VITE_BASE_PATH` - Base path for the application (default: `/product-management-app/` for production, `/` for development)
+  - For GitHub Pages: Set automatically by the workflow based on repository name
+  - For local dev: Usually `/` or leave empty
+  - For custom deployment: Match your deployment path
+
+- `VITE_API_BASE_URL` - API base URL (currently hardcoded to `https://dummyjson.com`)
+
+**Note:** 
+- Environment variables prefixed with `VITE_` are exposed to the client-side code
+- For GitHub Pages deployment, `VITE_BASE_PATH` is automatically set by the GitHub Actions workflow
+- The `.env.local` file is gitignored and should not be committed
+- See `env.example` for a template
 
 ## Assumptions & Notes
 
