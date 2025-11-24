@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-// Loading spinner component
+// Loading spinner component for the app
 </script>
 
